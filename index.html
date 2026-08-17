@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0d0d0e">
+    <title>Por Si Muero Mañana</title>
+
+    <!-- Google Fonts: Montserrat & Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS CDN for utility grid/flex classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="min-h-screen relative flex flex-col justify-between antialiased">
+
+    <!-- DEDICATED LOCK SCREEN / DATE GATE MODAL FOR KALE -->
+    <div id="lockScreenModal"
+        class="fixed inset-0 z-50 bg-black/90 backdrop-blur-2xl flex items-center justify-center p-4 transition-all duration-500">
+        <div
+            class="glass-panel w-full max-w-md rounded-3xl border border-white/10 p-6 sm:p-8 text-center space-y-6 shadow-2xl relative overflow-hidden transform transition-transform duration-300">
+            <!-- Glowing Ambient Red Effect -->
+            <div class="absolute -top-24 -left-24 w-48 h-48 bg-red-600/30 rounded-full blur-3xl pointer-events-none">
+            </div>
+            <div
+                class="absolute -bottom-24 -right-24 w-48 h-48 bg-rose-600/20 rounded-full blur-3xl pointer-events-none">
+            </div>
+
+            <!-- Heart Icon Badge -->
+            <div
+                class="w-16 h-16 mx-auto rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center shadow-lg shadow-red-500/20">
+                <svg class="w-8 h-8 text-red-500 animate-heartbeat" fill="currentColor" viewBox="0 0 24 24">
+                    <path
+                        d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                </svg>
+            </div>
+
+            <div>
+                <h2 class="font-mont font-black text-xl sm:text-2xl text-white tracking-tight">POR SI MUERO MAÑANA</h2>
+                <p class="font-mont text-xs font-semibold text-red-400 uppercase tracking-widest mt-1">Acceso Exclusivo
+                    para Kale</p>
+            </div>
+
+            <div class="space-y-4 pt-2">
+                <label for="datePickerInput" class="block text-sm font-pop font-medium text-zinc-300">
+                    Introducí la fecha en que nos hicimos novios ❤️
+                </label>
+
+                <!-- Modern Date Picker Input -->
+                <div class="relative max-w-xs mx-auto">
+                    <input type="date" id="datePickerInput"
+                        class="w-full bg-zinc-900/90 border border-white/15 focus:border-red-500 text-white font-mont text-center text-sm sm:text-base rounded-2xl px-4 py-3.5 outline-none transition-all shadow-inner cursor-pointer">
+                </div>
+
+                <!-- Error message feedback -->
+                <div id="lockScreenError"
+                    class="hidden text-xs font-pop text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-2.5">
+                    Esa no es la fecha especial... intenta de nuevo ❤️
+                </div>
+            </div>
+
+            <div class="pt-2 flex justify-center">
+                <button onclick="verifyKaleAuthDate()"
+                    class="btn-primary w-full max-w-xs justify-center py-3.5 text-sm">
+                    <span>Entrar al Álbum</span>
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Background Canvas for Real-Time Audio Visualizer & Ambient Particles -->
+    <canvas id="ambientCanvas"></canvas>
+
+    <!-- Toast Notification Banner -->
+    <div id="toastNotification">
+        <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+        <span id="toastText" class="font-mont text-xs font-semibold text-white">Reproduciendo</span>
+    </div>
+
+    <!-- Main Container -->
+    <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-36 w-full">
+
+        <!-- Header / Navigation Bar -->
+        <header class="flex justify-between items-center py-4 mb-8 border-b border-white/5">
+            <div class="flex items-center space-x-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block animate-heartbeat"></span>
+                <span class="font-mont text-xs font-bold tracking-widest text-zinc-400 uppercase">Para Kale</span>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span class="text-xs text-zinc-500 font-mont">Por</span>
+                <span
+                    class="font-mont text-xs font-bold text-white bg-white/5 px-3 py-1 rounded-full border border-white/10">Jonathan</span>
+            </div>
+        </header>
+
+        <!-- HERO SECTION -->
+        <section class="flex flex-col md:flex-row items-center gap-8 lg:gap-12 mb-12">
+
+            <!-- Album Cover with Spinning Vinyl Animation -->
+            <div id="heroVinylWrapper" class="vinyl-wrapper" onclick="togglePlayPause()">
+                <!-- Ambient Glow behind jacket -->
+                <div
+                    class="absolute -inset-2 bg-gradient-to-r from-red-600/30 to-rose-900/20 rounded-3xl blur-2xl opacity-70 transition duration-700">
+                </div>
+
+                <!-- Vinyl Disc Sliding Out -->
+                <div id="vinylDisc" class="vinyl-disc animate-spin-slow paused-animation">
+                    <div class="vinyl-center-label relative overflow-hidden">
+                        <img src="assets/Por Si Muero Mañana Cover.png" alt="Vinyl Label"
+                            class="w-full h-full object-cover opacity-80">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="vinyl-spindle-hole z-10"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Album Cover Card Jacket -->
+                <div class="album-jacket relative overflow-hidden rounded-2xl border border-white/10 shadow-2xl">
+                    <!-- Pure Album Cover Image -->
+                    <img src="assets/Por Si Muero Mañana Cover.png" alt="Por Si Muero Mañana Cover"
+                        class="absolute inset-0 w-full h-full object-cover z-0">
+
+                    <!-- Play Overlay Button - PERFECTLY CENTERED -->
+                    <div
+                        class="absolute inset-0 bg-black/50 backdrop-blur-[3px] opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-20">
+                        <div
+                            class="w-14 h-14 rounded-full bg-red-500 text-white flex items-center justify-center shadow-2xl shadow-red-500/60 transform hover:scale-110 transition duration-300">
+                            <svg id="heroPlayIcon" class="w-7 h-7 fill-current ml-0.5" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Album Header Details -->
+            <div class="flex-1 text-center md:text-left">
+                <div
+                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-mont font-semibold mb-3">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z">
+                        </path>
+                    </svg>
+                    <span>Para Kale • Edición Especial</span>
+                </div>
+
+                <h1 class="font-mont text-3xl sm:text-5xl font-black text-white tracking-tight mb-2">
+                    POR SI MUERO MAÑANA
+                </h1>
+
+                <p class="font-mont text-base sm:text-lg font-semibold text-zinc-400 mb-5">
+                    Un viaje sonoro por <span class="text-white border-b-2 border-red-500/80 pb-0.5">Jonathan</span>
+                </p>
+
+                <!-- Collapsible Romantic Dedication Note -->
+                <div class="glass-card rounded-2xl p-4 mb-6 transition-all duration-300 text-left">
+                    <button onclick="toggleDedication()"
+                        class="w-full flex items-center justify-between text-xs font-mont font-bold text-zinc-300 hover:text-red-400 transition-colors">
+                        <span class="flex items-center gap-2">
+                            <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                                <path
+                                    d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+                            </svg>
+                            MENSAJE PARA KALE
+                        </span>
+                        <span id="dedicationToggleText" class="text-[10px] text-zinc-400 uppercase tracking-widest">[
+                            Leer Carta ]</span>
+                    </button>
+
+                    <div id="dedicationContent"
+                        class="hidden mt-3 pt-3 border-t border-white/5 text-sm text-zinc-300 font-pop leading-relaxed space-y-2 selectable-text">
+                        <p class="text-sm font-semibold text-white">Kale,</p>
+                        <p class="text-xs text-zinc-300 leading-relaxed">
+                            Hice este álbum pensando en vos. Cada canción tiene un pedazo de nosotros: las vueltas en la moto, tus colochos, tus ojos cafés y todo lo que vivimos día a día. No soy de manualidades o cosas por el estilo, así que preferí dejártelo guardado en música. Es tuyo, para siempre.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Primary Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center md:justify-start gap-4">
+                    <button id="mainPlayBtn" onclick="playTrack(0)" class="btn-primary">
+                        <svg id="mainPlayIcon" class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z" />
+                        </svg>
+                        <span id="mainPlayText">Reproducir Álbum Completo</span>
+                    </button>
+
+                    <span class="text-xs font-mont font-medium text-zinc-400">
+                        7 Temas • Producción de Elite Mu7ic
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKLIST SECTION -->
+        <section class="mt-10">
+            <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-3">
+                <h2 class="font-mont text-xl font-bold text-white tracking-tight flex items-center gap-2.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                    Lista de Canciones
+                </h2>
+                <span class="text-xs text-zinc-400 font-mont hidden sm:inline">Toca una canción para escuchar</span>
+            </div>
+
+            <!-- Track Rows Container (Injected by JS) -->
+            <div id="tracklistContainer" class="space-y-3"></div>
+
+            <!-- ROMANTIC WHATSAPP REACTION CARD FOR JONATHAN -->
+            <div class="mt-12 glass-card rounded-3xl p-6 sm:p-8 border border-red-500/20 text-center space-y-4 relative overflow-hidden shadow-2xl">
+                <div class="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="w-14 h-14 mx-auto rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center shadow-lg shadow-emerald-500/20">
+                    <svg class="w-7 h-7 text-emerald-400" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.002 3.659 3.745-.992z"/>
+                    </svg>
+                </div>
+
+                <div>
+                    <h3 class="font-mont font-black text-lg sm:text-xl text-white">¿Te gustó el viaje sonoro, Kale?</h3>
+                    <p class="text-xs text-zinc-400 font-pop max-w-md mx-auto mt-1">
+                        Decile algo a Jonathan... él dejó todo su corazón grabado en cada una de estas canciones.
+                    </p>
+                </div>
+
+                <div class="pt-2 flex justify-center">
+                    <a href="https://wa.me/50496697462?text=Me%20encant%C3%B3%20todo%20el%20%C3%A1lbum%20mi%20amor%2C%20escuch%C3%A9%20todas%20las%20canciones%20%E2%9D%A4%EF%B8%8F" target="_blank" class="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white font-mont font-bold text-xs tracking-wide shadow-xl shadow-emerald-500/30 hover:scale-105 active:scale-95 transition-all">
+                        <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654z"/>
+                        </svg>
+                        <span>Enviar mensaje a Jonathan ❤️</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="mt-20 pt-8 border-t border-white/5 text-center">
+            <p class="font-mont text-xs font-semibold tracking-wider text-zinc-500 uppercase">
+                Producido por <span class="text-zinc-300">Elite Mu7ic</span> • Para siempre
+            </p>
+            <p class="text-[11px] text-zinc-600 mt-2 font-light">
+                Diseñado con amor especialmente para ser disfrutado en móvil y audífonos.
+            </p>
+        </footer>
+    </div>
+
+    <!-- STICKY BOTTOM PLAYER BAR -->
+    <div id="stickyPlayer"
+        class="fixed bottom-0 left-0 right-0 z-40 glass-panel px-4 py-3 transform translate-y-full transition-transform duration-500 ease-out shadow-2xl sticky-player-bar">
+        <div class="max-w-5xl mx-auto flex items-center justify-between gap-3">
+
+            <!-- Currently Playing Info (Tapping opens mobile drawer) -->
+            <div class="flex items-center gap-3 min-w-0 flex-1 cursor-pointer" onclick="openMobileDrawer()">
+                <div
+                    class="w-12 h-12 rounded-xl bg-zinc-900 border border-white/10 flex items-center justify-center flex-shrink-0 relative overflow-hidden shadow-md">
+                    <img src="assets/Por Si Muero Mañana Cover.png" alt="Portada Mini"
+                        class="w-full h-full object-cover">
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p id="stickyTrackTitle" class="font-mont font-bold text-sm text-white truncate">Selecciona una
+                        canción</p>
+                    <p id="stickyTrackSubtitle" class="text-xs text-zinc-400 truncate">Por Si Muero Mañana — Jonathan
+                    </p>
+                </div>
+            </div>
+
+            <!-- Player Controls -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <!-- Shuffle Toggle -->
+                <button id="shuffleBtn" onclick="toggleShuffle()" class="btn-icon hidden sm:flex" title="Aleatorio">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z" />
+                    </svg>
+                </button>
+
+                <!-- Prev Track -->
+                <button onclick="playPrevTrack()" class="btn-icon" title="Anterior">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+                    </svg>
+                </button>
+
+                <!-- Play/Pause Main -->
+                <button id="stickyPlayBtn" onclick="togglePlayPause()"
+                    class="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center shadow-lg shadow-red-500/40 hover:scale-105 active:scale-95 transition-transform flex-shrink-0">
+                    <svg id="stickyPlayIcon" class="w-6 h-6 ml-0.5 fill-current" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
+
+                <!-- Next Track -->
+                <button onclick="playNextTrack()" class="btn-icon" title="Siguiente">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+                    </svg>
+                </button>
+
+                <!-- Repeat Toggle -->
+                <button id="repeatBtn" onclick="toggleRepeat()" class="btn-icon hidden sm:flex" title="Repetir">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
+                    </svg>
+                </button>
+
+                <!-- Lyrics Button -->
+                <button onclick="openCurrentLyrics()" title="Ver Letra" class="btn-icon text-zinc-300">
+                    <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1.007 1.007 0 01.707.293l5.414 5.414a1.007 1.007 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Global Seekbar Row -->
+        <div class="max-w-5xl mx-auto flex items-center gap-3 mt-2 px-1">
+            <span id="currentTimeText" class="text-[11px] font-mono text-zinc-400 w-9 text-right">0:00</span>
+            <input type="range" id="globalSeekbar" min="0" max="100" value="0" step="0.1"
+                oninput="seekAudio(this.value)" class="flex-1">
+            <span id="durationTimeText" class="text-[11px] font-mono text-zinc-400 w-9">0:00</span>
+        </div>
+    </div>
+
+    <!-- DEDICATED MOBILE FULL-SCREEN PLAYER DRAWER -->
+    <div id="mobilePlayerDrawer" class="mobile-player-drawer">
+        <div>
+            <div class="drawer-drag-handle" onclick="closeMobileDrawer()"></div>
+            <div class="flex justify-between items-center mb-6">
+                <button onclick="closeMobileDrawer()" class="text-zinc-400 hover:text-white p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </button>
+                <span class="font-mont text-xs font-bold text-zinc-400 uppercase tracking-widest">Reproduciendo</span>
+                <button onclick="openCurrentLyrics()" class="text-red-400 hover:text-white p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1.007 1.007 0 01.707.293l5.414 5.414a1.007 1.007 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Big Clean Album Art for Mobile Drawer -->
+            <div class="w-64 h-64 mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative mb-6">
+                <img src="assets/Por Si Muero Mañana Cover.png" alt="Cover Drawer" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Track Details Below Cover -->
+            <div class="text-center px-4 mb-6">
+                <div class="flex items-center justify-center gap-2 mb-1">
+                    <span id="drawerTrackNum"
+                        class="font-mont font-bold text-xs text-red-400 bg-red-500/10 px-2.5 py-0.5 rounded-full border border-red-500/20">01</span>
+                </div>
+                <h3 id="drawerTrackTitle" class="font-mont font-black text-xl text-white truncate">Por Si Muero Mañana
+                </h3>
+                <p class="text-xs text-zinc-400 font-mont font-medium mt-0.5">Jonathan • Para Kale</p>
+            </div>
+        </div>
+
+        <!-- Controls & Seekbar -->
+        <div class="space-y-6">
+            <div>
+                <input type="range" id="drawerSeekbar" min="0" max="100" value="0" step="0.1"
+                    oninput="seekAudio(this.value)">
+                <div class="flex justify-between text-xs font-mono text-zinc-400 mt-2">
+                    <span id="drawerCurrentTime">0:00</span>
+                    <span id="drawerDurationTime">0:00</span>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between px-4">
+                <button id="drawerShuffleBtn" onclick="toggleShuffle()" class="btn-icon">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.45 20 9.5V4h-5.5zm.33 9.41l-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z" />
+                    </svg>
+                </button>
+
+                <button onclick="playPrevTrack()" class="btn-icon">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+                    </svg>
+                </button>
+
+                <button id="drawerPlayBtn" onclick="togglePlayPause()"
+                    class="w-16 h-16 rounded-full bg-red-500 text-white flex items-center justify-center shadow-xl shadow-red-500/50 active:scale-95 transition-transform">
+                    <svg id="drawerPlayIcon" class="w-8 h-8 ml-1 fill-current" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
+
+                <button onclick="playNextTrack()" class="btn-icon">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z" />
+                    </svg>
+                </button>
+
+                <button id="drawerRepeatBtn" onclick="toggleRepeat()" class="btn-icon">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LYRICS MODAL -->
+    <div id="lyricsModal"
+        class="fixed inset-0 z-50 bg-black/80 backdrop-blur-md hidden flex items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+        <div
+            class="glass-panel w-full max-w-2xl max-h-[85vh] rounded-3xl border border-white/10 flex flex-col overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300">
+
+            <!-- Modal Header -->
+            <div class="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-zinc-900/60">
+                <div class="flex items-center gap-3">
+                    <div id="lyricsNumBadge"
+                        class="w-8 h-8 rounded-full bg-red-500/20 border border-red-500/40 font-mont font-bold text-xs text-red-400 flex items-center justify-center">
+                        01
+                    </div>
+                    <div>
+                        <h3 id="lyricsTrackTitle" class="font-mont font-bold text-lg text-white">Por Si Muero Mañana
+                        </h3>
+                        <p id="lyricsGenreBadge" class="text-xs text-red-400 font-mont font-semibold">80s Synth-Pop</p>
+                    </div>
+                </div>
+                <button onclick="closeLyrics()"
+                    class="w-9 h-9 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Modal Body (Lyrics) -->
+            <div class="p-6 sm:p-8 overflow-y-auto space-y-6 text-zinc-200">
+                <div id="lyricsNoteBox"
+                    class="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-xs font-pop text-red-200 italic leading-relaxed">
+                    <!-- Dynamic style note -->
+                </div>
+                <div id="lyricsBody"
+                    class="font-pop text-base leading-relaxed whitespace-pre-line text-zinc-200 selectable-text">
+                    <!-- Lyrics -->
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 border-t border-white/10 bg-zinc-900/60 flex justify-between items-center">
+                <span class="text-xs text-zinc-400 font-mont">Por Si Muero Mañana • Jonathan para Kale</span>
+                <button onclick="closeLyrics()"
+                    class="px-5 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-xs font-mont font-semibold text-white transition-colors">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="script.js"></script>
+</body>
+
+</html>
