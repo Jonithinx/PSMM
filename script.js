@@ -1,10 +1,6 @@
 /* ==========================================================================
    POR SI MUERO MAÑANA - JAVASCRIPT AUDIO ENGINE & INTERACTIVITY
-<<<<<<< HEAD
-   Dedicated to Kale by Jonathan • Elite Mu7ic Production
-=======
    Dedicated to Kale by Jonathan • 7lite Music Production
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
    ========================================================================== */
 
 // --- Tracks Data Array linked directly to assets/album tracks ---
@@ -298,15 +294,6 @@ Solo con vos quiero envejecer...`
 
 // --- Dynamic Visual Theme Palettes per Track ---
 const themePalettes = [
-<<<<<<< HEAD
-    { primary: '#ef4444', secondary: '#f43f5e', glow: 'rgba(239, 68, 68, 0.45)', shadow: '#ef4444' }, // 1. Bedroom Pop
-    { primary: '#f59e0b', secondary: '#d97706', glow: 'rgba(245, 158, 11, 0.5)', shadow: '#f59e0b' },  // 2. Afrobeat
-    { primary: '#e11d48', secondary: '#be123c', glow: 'rgba(225, 29, 72, 0.55)', shadow: '#e11d48' }, // 3. Reggaeton
-    { primary: '#f43f5e', secondary: '#e11d48', glow: 'rgba(244, 63, 94, 0.5)', shadow: '#f43f5e' },  // 4. Bachata
-    { primary: '#a855f7', secondary: '#9333ea', glow: 'rgba(168, 85, 247, 0.5)', shadow: '#a855f7' }, // 5. Trapsoul
-    { primary: '#14b8a6', secondary: '#0d9488', glow: 'rgba(20, 184, 166, 0.5)', shadow: '#14b8a6' }, // 6. Deep House
-    { primary: '#f4f4f5', secondary: '#e4e4e7', glow: 'rgba(244, 244, 245, 0.45)', shadow: '#ffffff' } // 7. JyK
-=======
     { primary: '#ef4444', secondary: '#f43f5e', glow: 'rgba(239, 68, 68, 0.45)', bgGlow: 'radial-gradient(circle at 50% 25%, rgba(239, 68, 68, 0.35) 0%, rgba(244, 63, 94, 0.12) 45%, transparent 75%)', shadow: '#ef4444' }, // 1. Bedroom Pop
     { primary: '#f59e0b', secondary: '#d97706', glow: 'rgba(245, 158, 11, 0.5)', bgGlow: 'radial-gradient(circle at 50% 25%, rgba(245, 158, 11, 0.38) 0%, rgba(217, 119, 6, 0.14) 45%, transparent 75%)', shadow: '#f59e0b' },  // 2. Afrobeat
     { primary: '#e11d48', secondary: '#be123c', glow: 'rgba(225, 29, 72, 0.55)', bgGlow: 'radial-gradient(circle at 50% 25%, rgba(225, 29, 72, 0.4) 0%, rgba(190, 18, 60, 0.15) 45%, transparent 75%)', shadow: '#e11d48' }, // 3. Reggaeton
@@ -314,7 +301,6 @@ const themePalettes = [
     { primary: '#a855f7', secondary: '#9333ea', glow: 'rgba(168, 85, 247, 0.5)', bgGlow: 'radial-gradient(circle at 50% 25%, rgba(168, 85, 247, 0.38) 0%, rgba(147, 51, 234, 0.14) 45%, transparent 75%)', shadow: '#a855f7' }, // 5. Trapsoul
     { primary: '#14b8a6', secondary: '#0d9488', glow: 'rgba(20, 184, 166, 0.5)', bgGlow: 'radial-gradient(circle at 50% 25%, rgba(20, 184, 166, 0.35) 0%, rgba(13, 148, 136, 0.14) 45%, transparent 75%)', shadow: '#14b8a6' }, // 6. Deep House
     { primary: '#f4f4f5', secondary: '#e4e4e7', glow: 'rgba(244, 244, 245, 0.45)', bgGlow: 'radial-gradient(circle at 50% 25%, rgba(255, 255, 255, 0.32) 0%, rgba(228, 228, 231, 0.12) 45%, transparent 75%)', shadow: '#ffffff' } // 7. JyK
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 ];
 
 function applyThemePalette(index) {
@@ -324,84 +310,6 @@ function applyThemePalette(index) {
     document.documentElement.style.setProperty('--accent-glow', theme.glow);
     document.documentElement.style.setProperty('--accent-glow-subtle', theme.glow);
     document.documentElement.style.setProperty('--border-accent', theme.primary + '55');
-<<<<<<< HEAD
-=======
-
-    const overlay = document.getElementById('ambientGlowOverlay');
-    if (overlay) {
-        overlay.style.background = theme.bgGlow;
-    }
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
-}
-
-// --- Audio Player Global State ---
-let currentTrackIndex = -1;
-let isPlaying = false;
-let isShuffle = false;
-let isRepeat = false;
-
-// Clean standalone HTML5 Audio element
-const htmlAudio = new Audio();
-htmlAudio.volume = 1.0;
-htmlAudio.preload = "auto";
-
-// Web Audio Synth Fallback (used only if WAV fails to load)
-let audioCtx = null;
-let synthInterval = null;
-
-function playSynthMelody(trackIndex) {
-    stopSynthMelody();
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    }
-    if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-    }
-
-    const genreStyles = [
-        { notes: [261.63, 329.63, 392.00, 523.25], wave: 'sawtooth', speed: 450, env: 0.15 },
-        { notes: [293.66, 369.99, 440.00, 587.33], wave: 'triangle', speed: 320, env: 0.18 },
-        { notes: [220.00, 261.63, 329.63, 440.00], wave: 'square', speed: 380, env: 0.20 },
-        { notes: [329.63, 392.00, 493.88, 659.25], wave: 'sine', speed: 280, env: 0.14 },
-        { notes: [164.81, 196.00, 246.94, 329.63], wave: 'sawtooth', speed: 500, env: 0.22 },
-        { notes: [196.00, 246.94, 293.66, 392.00], wave: 'sine', speed: 350, env: 0.16 },
-        { notes: [220.00, 277.18, 329.63, 440.00], wave: 'sine', speed: 1200, env: 0.08 }
-    ];
-
-    const currentStyle = genreStyles[trackIndex % genreStyles.length];
-    let noteIdx = 0;
-
-    synthInterval = setInterval(() => {
-        if (!isPlaying || !audioCtx) return;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        osc.type = currentStyle.wave;
-        osc.frequency.setValueAtTime(currentStyle.notes[noteIdx % currentStyle.notes.length], audioCtx.currentTime);
-
-        gain.gain.setValueAtTime(0.01, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(currentStyle.env, audioCtx.currentTime + 0.15);
-        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + (currentStyle.speed / 1000));
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + (currentStyle.speed / 1000) + 0.05);
-
-        noteIdx++;
-    }, currentStyle.speed);
-}
-
-function stopSynthMelody() {
-    if (synthInterval) {
-        clearInterval(synthInterval);
-        synthInterval = null;
-    }
-}
-
-<<<<<<< HEAD
-=======
 // --- Release Date & Security Controls ---
 // Estreno adelantado al 5 de septiembre de 2026 a las 10:00 PM hora Honduras (UTC-6)
 const TARGET_RELEASE_DATE = new Date("2026-09-05T22:00:00-06:00").getTime();
@@ -471,7 +379,6 @@ function triggerSecretDevUnlock() {
     }
 }
 
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 // --- Security & Gate for Kale ---
 function verifyKaleAuthDate() {
     const input = document.getElementById('datePickerInput');
@@ -522,37 +429,12 @@ function checkAuthOnLoad() {
 // --- Direct Automatic Track Download ---
 function downloadTrack(index, event) {
     if (event) event.stopPropagation();
-<<<<<<< HEAD
-=======
-    if (!isAudioUnlocked()) {
-        if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
-        showToast("🔒 Disponible a partir del 5 de septiembre de 2026 (10:00 PM) ❤️");
-        return;
-    }
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
-    const track = tracksData[index];
-    const link = document.createElement('a');
-    link.href = encodeURI(track.src);
-    link.download = `${track.id}. ${track.title}.wav`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    showToast(`Iniciando descarga: ${track.title}`);
-}
-
-// --- Audio Playback Functions ---
-function playTrack(index) {
-    if (index < 0 || index >= tracksData.length) return;
-
-<<<<<<< HEAD
-=======
     if (!isAudioUnlocked()) {
         if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
         showToast("🔒 Las canciones estarán disponibles a partir del 5 de septiembre de 2026 (10:00 PM) ❤️");
         return;
     }
 
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     if (navigator.vibrate) {
         navigator.vibrate(25);
     }
@@ -596,191 +478,6 @@ function pauseTrack() {
 }
 
 function togglePlayPause() {
-<<<<<<< HEAD
-=======
-    if (!isAudioUnlocked()) {
-        if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
-        showToast("🔒 Las canciones estarán disponibles a partir del 5 de septiembre de 2026 (10:00 PM) ❤️");
-        return;
-    }
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
-    if (currentTrackIndex === -1) {
-        playTrack(0);
-    } else if (isPlaying) {
-        pauseTrack();
-    } else {
-        isPlaying = true;
-        applyThemePalette(currentTrackIndex);
-        if (htmlAudio.src) {
-            htmlAudio.play().catch(() => playSynthMelody(currentTrackIndex));
-        } else {
-            playTrack(currentTrackIndex);
-        }
-        updateUI();
-        showToast("Reanudado");
-    }
-}
-
-function playNextTrack() {
-    if (isShuffle) {
-        let randomIndex;
-        do {
-            randomIndex = Math.floor(Math.random() * tracksData.length);
-        } while (randomIndex === currentTrackIndex && tracksData.length > 1);
-        playTrack(randomIndex);
-    } else if (currentTrackIndex + 1 < tracksData.length) {
-        playTrack(currentTrackIndex + 1);
-    } else {
-        playTrack(0);
-    }
-}
-
-function playPrevTrack() {
-    if (htmlAudio.currentTime > 3) {
-        htmlAudio.currentTime = 0;
-        return;
-    }
-    if (currentTrackIndex - 1 >= 0) {
-        playTrack(currentTrackIndex - 1);
-    } else {
-        playTrack(tracksData.length - 1);
-    }
-}
-
-function toggleShuffle() {
-    isShuffle = !isShuffle;
-    const btnDesktop = document.getElementById('shuffleBtn');
-    const btnMobile = document.getElementById('drawerShuffleBtn');
-
-    [btnDesktop, btnMobile].forEach(btn => {
-        if (btn) {
-            if (isShuffle) btn.classList.add('active');
-            else btn.classList.remove('active');
-        }
-    });
-
-    showToast(isShuffle ? "Modo Aleatorio Activado" : "Modo Aleatorio Desactivado");
-}
-
-function toggleRepeat() {
-    isRepeat = !isRepeat;
-    htmlAudio.loop = isRepeat;
-
-    const btnDesktop = document.getElementById('repeatBtn');
-    const btnMobile = document.getElementById('drawerRepeatBtn');
-
-    [btnDesktop, btnMobile].forEach(btn => {
-        if (btn) {
-            if (isRepeat) btn.classList.add('active');
-            else btn.classList.remove('active');
-        }
-    });
-
-    showToast(isRepeat ? "Repetir Canción Activado" : "Repetir Canción Desactivado");
-}
-
-function seekAudio(percent) {
-    if (currentTrackIndex === -1) return;
-    const duration = htmlAudio.duration || tracksData[currentTrackIndex].durationSec;
-    const newTime = (percent / 100) * duration;
-    htmlAudio.currentTime = newTime;
-    updateSeekbarUI(newTime, duration);
-}
-
-// --- Audio Event Listeners ---
-htmlAudio.addEventListener('timeupdate', () => {
-    const duration = htmlAudio.duration || tracksData[currentTrackIndex]?.durationSec || 1;
-    updateSeekbarUI(htmlAudio.currentTime, duration);
-});
-
-htmlAudio.addEventListener('loadedmetadata', () => {
-    if (currentTrackIndex !== -1 && htmlAudio.duration) {
-        tracksData[currentTrackIndex].durationSec = htmlAudio.duration;
-        tracksData[currentTrackIndex].durationStr = formatSeconds(htmlAudio.duration);
-        renderTracklist();
-        updateSeekbarUI(htmlAudio.currentTime, htmlAudio.duration);
-    }
-});
-
-htmlAudio.addEventListener('ended', () => {
-    if (!isRepeat) {
-        if (currentTrackIndex === tracksData.length - 1) {
-            showToast("¡Álbum completado! Escríbele a Jonathan ❤️");
-        }
-        playNextTrack();
-    }
-});
-
-// --- UI Sync & Rendering ---
-function updateSeekbarUI(currentTime, duration) {
-    const pct = (currentTime / duration) * 100 || 0;
-    
-    const seekbar = document.getElementById('globalSeekbar');
-    if (seekbar) seekbar.value = pct;
-
-    const drawerSeekbar = document.getElementById('drawerSeekbar');
-    if (drawerSeekbar) drawerSeekbar.value = pct;
-
-    const currentText = formatSeconds(currentTime);
-    const durationText = formatSeconds(duration);
-
-    ['currentTimeText', 'drawerCurrentTime'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = currentText;
-    });
-
-    ['durationTimeText', 'drawerDurationTime'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = durationText;
-    });
-
-    const rowBar = document.getElementById('activeRowProgressBar');
-    if (rowBar) {
-        rowBar.style.width = `${pct}%`;
-    }
-}
-
-function formatSeconds(sec) {
-    if (isNaN(sec) || sec === Infinity) return "0:00";
-    const m = Math.floor(sec / 60);
-    const s = Math.floor(sec % 60);
-    return `${m}:${s < 10 ? '0' : ''}${s}`;
-}
-
-function renderTracklist() {
-    const container = document.getElementById('tracklistContainer');
-    if (!container) return;
-
-<<<<<<< HEAD
-    container.innerHTML = '';
-    tracksData.forEach((track, index) => {
-        const isCurrent = index === currentTrackIndex;
-        const row = document.createElement('div');
-        row.className = `track-row group glass-card rounded-2xl p-4 transition-all duration-300 ${isCurrent ? 'active-track' : ''}`;
-        
-        row.innerHTML = `
-            <div class="flex items-center justify-between gap-3 sm:gap-4">
-                <!-- Play/Pause Icon + Number + Title -->
-                <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 cursor-pointer" onclick="playTrack(${index})">
-                    <button class="w-11 h-11 rounded-full ${isCurrent ? 'bg-red-500 text-white shadow-lg shadow-red-500/40' : 'bg-white/5 group-hover:bg-red-500 text-zinc-400 group-hover:text-white'} flex items-center justify-center flex-shrink-0 transition-all duration-300">
-                        ${isCurrent && isPlaying ? `
-                            <div class="eq-container">
-                                <div class="eq-bar"></div>
-                                <div class="eq-bar"></div>
-                                <div class="eq-bar"></div>
-                                <div class="eq-bar"></div>
-                            </div>
-                        ` : `
-                            <span class="font-mont font-bold text-xs group-hover:hidden ${isCurrent ? 'text-red-400' : 'text-zinc-400'}">0${track.id}</span>
-                            <svg class="w-5 h-5 fill-current hidden group-hover:block ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        `}
-                    </button>
-                    
-                    <div class="min-w-0 flex-1">
-                        <h3 class="font-mont font-bold text-sm sm:text-base ${isCurrent ? 'text-red-400' : 'text-white group-hover:text-red-400'} truncate transition-colors mb-0.5">
-                            ${track.title}
-                        </h3>
-=======
     const unlocked = isAudioUnlocked();
 
     // Build DOM rows once if not present
@@ -842,7 +539,6 @@ function renderTracklist() {
                             </h3>
                             ${!unlocked ? `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-red-500/10 border border-red-500/20 text-[10px] font-mont font-semibold text-red-400 flex-shrink-0">🔒 5 Sep 10 PM</span>` : ''}
                         </div>
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
                         <p class="text-xs text-zinc-400 font-light truncate">Track 0${track.id} • Por Si Muero Mañana</p>
                     </div>
                 </div>
@@ -852,22 +548,13 @@ function renderTracklist() {
                     <span class="text-xs font-mono text-zinc-400 hidden sm:inline">${track.durationStr}</span>
                     
                     <!-- Automatic Download Button -->
-<<<<<<< HEAD
-                    <button onclick="downloadTrack(${index}, event)" title="Descargar canción" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-xs font-mont font-semibold text-zinc-300 hover:text-red-400 transition-all duration-200 flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
-=======
                     <button onclick="downloadTrack(${index}, event)" title="${unlocked ? 'Descargar canción' : 'Disponible el 5 de septiembre de 2026 (10:00 PM)'}" class="px-3 py-1.5 rounded-xl ${unlocked ? 'bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-zinc-300 hover:text-red-400' : 'bg-white/5 opacity-50 cursor-not-allowed border border-white/5 text-zinc-500'} text-xs font-mont font-semibold transition-all duration-300 flex items-center gap-1.5">
                         <svg class="w-4 h-4 ${unlocked ? 'text-red-400' : 'text-zinc-500'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
                         <span class="hidden sm:inline">Descargar</span>
                     </button>
 
                     <!-- Lyrics Button -->
-<<<<<<< HEAD
-                    <button onclick="openLyrics(${index})" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-xs font-mont font-semibold text-zinc-300 hover:text-red-400 transition-all duration-200 flex items-center gap-1.5">
-=======
                     <button onclick="openLyrics(${index})" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-xs font-mont font-semibold text-zinc-300 hover:text-red-400 transition-all duration-300 flex items-center gap-1.5">
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
                         <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1.007 1.007 0 01.707.293l5.414 5.414a1.007 1.007 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span>Letra</span>
                     </button>
@@ -875,37 +562,18 @@ function renderTracklist() {
             </div>
 
             <!-- Active Row Dynamic Progress Bar -->
-<<<<<<< HEAD
-            ${isCurrent ? `
-                <div class="mt-3 w-full bg-zinc-800/80 rounded-full h-1 overflow-hidden">
-                    <div id="activeRowProgressBar" class="bg-red-500 h-full transition-all duration-200" style="width: 0%"></div>
-                </div>
-            ` : ''}
-        `;
-        container.appendChild(row);
-=======
             ${isCurrent && unlocked ? `
                 <div class="mt-3 w-full bg-zinc-800/80 rounded-full h-1 overflow-hidden">
                     <div id="activeRowProgressBar" class="bg-red-500 h-full transition-all duration-300" style="width: 0%"></div>
                 </div>
             ` : ''}
         `;
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     });
 }
 
 function updateUI() {
     renderTracklist();
 
-<<<<<<< HEAD
-    const vinylWrapper = document.getElementById('heroVinylWrapper');
-    const vinylDisc = document.getElementById('vinylDisc');
-    const stickyPlayer = document.getElementById('stickyPlayer');
-
-    const pauseSvg = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
-    const playSvg = '<path d="M8 5v14l11-7z"/>';
-
-=======
     const unlocked = isAudioUnlocked();
     const vinylWrapper = document.getElementById('heroVinylWrapper');
     const vinylDisc = document.getElementById('vinylDisc');
@@ -929,7 +597,6 @@ function updateUI() {
         if (mainBtn) mainBtn.className = "btn-primary opacity-100 grayscale-0 cursor-pointer";
     }
 
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     if (isPlaying) {
         if (vinylWrapper) vinylWrapper.classList.add('is-playing');
         if (vinylDisc) vinylDisc.classList.remove('paused-animation');
@@ -939,11 +606,6 @@ function updateUI() {
             const el = document.getElementById(id);
             if (el) el.innerHTML = pauseSvg;
         });
-
-<<<<<<< HEAD
-        const mainText = document.getElementById('mainPlayText');
-=======
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
         if (mainText) mainText.textContent = "Pausar Reproducción";
 
     } else {
@@ -955,10 +617,6 @@ function updateUI() {
             if (el) el.innerHTML = playSvg;
         });
 
-<<<<<<< HEAD
-        const mainText = document.getElementById('mainPlayText');
-=======
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
         if (mainText) mainText.textContent = currentTrackIndex === -1 ? "Reproducir Álbum Completo" : "Reanudar Álbum";
     }
 
@@ -999,19 +657,6 @@ function closeMobileDrawer() {
 
 function openLyrics(index) {
     const track = tracksData[index];
-<<<<<<< HEAD
-=======
-    const unlocked = isAudioUnlocked();
-
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
-    document.getElementById('lyricsNumBadge').textContent = `0${track.id}`;
-    document.getElementById('lyricsTrackTitle').textContent = track.title;
-    document.getElementById('lyricsGenreBadge').textContent = track.genre;
-    document.getElementById('lyricsNoteBox').textContent = track.note;
-    document.getElementById('lyricsBody').textContent = track.lyrics;
-
-<<<<<<< HEAD
-=======
     const lockedOverlay = document.getElementById('lyricsLockedOverlay');
     const lyricsBody = document.getElementById('lyricsBody');
     const noteBox = document.getElementById('lyricsNoteBox');
@@ -1034,7 +679,6 @@ function openLyrics(index) {
         }
     }
 
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     const modal = document.getElementById('lyricsModal');
     modal.classList.remove('hidden');
     setTimeout(() => {
@@ -1149,10 +793,7 @@ function initCanvasEffects() {
 // Initialization on Window Load
 window.addEventListener('DOMContentLoaded', () => {
     checkAuthOnLoad();
-<<<<<<< HEAD
-=======
     initCountdown();
->>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     renderTracklist();
     initCanvasEffects();
 });
