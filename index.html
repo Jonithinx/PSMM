@@ -120,13 +120,15 @@
                     class="absolute -inset-2 bg-gradient-to-r from-red-600/30 to-rose-900/20 rounded-3xl blur-2xl opacity-70 transition duration-700">
                 </div>
 
-                <!-- Vinyl Disc Sliding Out -->
-                <div id="vinylDisc" class="vinyl-disc animate-spin-slow paused-animation">
-                    <div class="vinyl-center-label relative overflow-hidden">
-                        <img src="assets/Por Si Muero Mañana Cover.png" alt="Vinyl Label"
-                            class="w-full h-full object-cover opacity-80">
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <div class="vinyl-spindle-hole z-10"></div>
+                <!-- Vinyl Disc Sliding Out (Wrapped to decouple positioning and rotation) -->
+                <div id="vinylSlideWrapper" class="vinyl-slide-wrapper">
+                    <div id="vinylDisc" class="vinyl-disc animate-spin-slow paused-animation">
+                        <div class="vinyl-center-label relative overflow-hidden">
+                            <img src="assets/Por Si Muero Mañana Cover.png" alt="Vinyl Label"
+                                class="w-full h-full object-cover opacity-80">
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="vinyl-spindle-hole z-10"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -167,7 +169,7 @@
                 </h1>
 
                 <p class="font-mont text-base sm:text-lg font-semibold text-zinc-400 mb-5">
-                    Un viaje sonoro por <span class="text-white border-b-2 border-red-500/80 pb-0.5">Jonathan</span>
+                    - <span class="text-white border-b-2 border-red-500/80 pb-0.5">Jonathan</span>
                 </p>
 
                 <!-- Collapsible Romantic Dedication Note -->
@@ -266,9 +268,9 @@
                 </div>
 
                 <div>
-                    <h3 class="font-mont font-black text-lg sm:text-xl text-white">¿Te gustó el viaje sonoro, Kale?</h3>
+                    <h3 class="font-mont font-black text-lg sm:text-xl text-white">¿Te gustó el viaje sonoro, mi amor?</h3>
                     <p class="text-xs text-zinc-400 font-pop max-w-md mx-auto mt-1">
-                        Decile algo a Jonathan... él dejó todo su corazón grabado en cada una de estas canciones.
+                        Decime algo... dejé todo mi corazón grabado en cada una de estas canciones.
                     </p>
                 </div>
 
@@ -474,7 +476,6 @@
                     <div>
                         <h3 id="lyricsTrackTitle" class="font-mont font-bold text-lg text-white">Por Si Muero Mañana
                         </h3>
-                        <p id="lyricsGenreBadge" class="text-xs text-red-400 font-mont font-semibold">80s Synth-Pop</p>
                     </div>
                 </div>
                 <button onclick="closeLyrics()"
@@ -488,10 +489,6 @@
 
             <!-- Modal Body (Lyrics) -->
             <div class="p-6 sm:p-8 overflow-y-auto space-y-6 text-zinc-200">
-                <div id="lyricsNoteBox"
-                    class="p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-xs font-pop text-red-200 italic leading-relaxed">
-                    <!-- Dynamic style note -->
-                </div>
                 <div id="lyricsBody"
                     class="font-pop text-base leading-relaxed whitespace-pre-line text-zinc-200 selectable-text">
                     <!-- Lyrics -->

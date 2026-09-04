@@ -382,8 +382,7 @@ const TARGET_RELEASE_DATE = new Date("2026-09-05T22:00:00-06:00").getTime();
 
 function isAudioUnlocked() {
     const now = new Date().getTime();
-    const isDevBypassed = localStorage.getItem('dev_bypassed_lock') === 'true';
-    return now >= TARGET_RELEASE_DATE || isDevBypassed;
+    return now >= TARGET_RELEASE_DATE;
 }
 
 function updateCountdownTimer() {
@@ -464,6 +463,11 @@ function checkAuthOnLoad() {
 // --- Direct Automatic Track Download ---
 function downloadTrack(index, event) {
     if (event) event.stopPropagation();
+    if (!isAudioUnlocked()) {
+        if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+        showToast("🔒 Disponible a partir del 5 de septiembre de 2026 (10:00 PM) ❤️");
+        return;
+    }
     const track = tracksData[index];
     const link = document.createElement('a');
     link.href = encodeURI(track.src);
@@ -476,6 +480,11 @@ function downloadTrack(index, event) {
 
 // --- Audio Playback Functions ---
 function playTrack(index) {
+    if (!isAudioUnlocked()) {
+        if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+        showToast("🔒 Las canciones estarán disponibles el 5 de septiembre a las 10:00 PM ❤️");
+        return;
+    }
     if (index < 0 || index >= tracksData.length) return;
 
     if (navigator.vibrate) {
@@ -521,6 +530,11 @@ function pauseTrack() {
 }
 
 function togglePlayPause() {
+    if (!isAudioUnlocked()) {
+        if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+        showToast("🔒 Las canciones estarán disponibles el 5 de septiembre a las 10:00 PM ❤️");
+        return;
+    }
     if (currentTrackIndex === -1) {
         playTrack(0);
     } else if (isPlaying) {
@@ -668,18 +682,22 @@ function renderTracklist() {
     const container = document.getElementById('tracklistContainer');
     if (!container) return;
 
+    const unlocked = isAudioUnlocked();
+
     container.innerHTML = '';
     tracksData.forEach((track, index) => {
         const isCurrent = index === currentTrackIndex;
         const row = document.createElement('div');
-        row.className = `track-row group glass-card rounded-2xl p-4 transition-all duration-300 ${isCurrent ? 'active-track' : ''}`;
+        row.className = `track-row group glass-card rounded-2xl p-4 transition-all duration-300 ${!unlocked ? 'opacity-70 cursor-not-allowed border-white/5' : (isCurrent ? 'active-track' : '')}`;
         
         row.innerHTML = `
             <div class="flex items-center justify-between gap-3 sm:gap-4">
                 <!-- Play/Pause Icon + Number + Title -->
                 <div class="flex items-center gap-3 sm:gap-4 min-w-0 flex-1 cursor-pointer" onclick="playTrack(${index})">
-                    <button class="w-11 h-11 rounded-full ${isCurrent ? 'bg-red-500 text-white shadow-lg shadow-red-500/40' : 'bg-white/5 group-hover:bg-red-500 text-zinc-400 group-hover:text-white'} flex items-center justify-center flex-shrink-0 transition-all duration-300">
-                        ${isCurrent && isPlaying ? `
+                    <button class="w-11 h-11 rounded-full ${!unlocked ? 'bg-zinc-800/80 border border-white/10 text-zinc-400' : (isCurrent ? 'bg-red-500 text-white shadow-lg shadow-red-500/40' : 'bg-white/5 group-hover:bg-red-500 text-zinc-400 group-hover:text-white')} flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                        ${!unlocked ? `
+                            <svg class="w-4 h-4 fill-current text-zinc-400" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                        ` : (isCurrent && isPlaying ? `
                             <div class="eq-container">
                                 <div class="eq-bar"></div>
                                 <div class="eq-bar"></div>
@@ -689,13 +707,20 @@ function renderTracklist() {
                         ` : `
                             <span class="font-mont font-bold text-xs group-hover:hidden ${isCurrent ? 'text-red-400' : 'text-zinc-400'}">0${track.id}</span>
                             <svg class="w-5 h-5 fill-current hidden group-hover:block ml-0.5 text-white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        `}
+                        `)}
                     </button>
                     
                     <div class="min-w-0 flex-1">
-                        <h3 class="font-mont font-bold text-sm sm:text-base ${isCurrent ? 'text-red-400' : 'text-white group-hover:text-red-400'} truncate transition-colors mb-0.5">
-                            ${track.title}
-                        </h3>
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-mont font-bold text-sm sm:text-base ${isCurrent ? 'text-red-400' : 'text-white group-hover:text-red-400'} truncate transition-colors mb-0.5">
+                                ${track.title}
+                            </h3>
+                            ${!unlocked ? `
+                                <span class="px-2 py-0.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-mont font-semibold text-red-400 flex items-center gap-1">
+                                    🔒 5 Sep 10 PM
+                                </span>
+                            ` : ''}
+                        </div>
                         <p class="text-xs text-zinc-400 font-light truncate">Track 0${track.id} • Por Si Muero Mañana</p>
                     </div>
                 </div>
@@ -705,14 +730,14 @@ function renderTracklist() {
                     <span class="text-xs font-mono text-zinc-400 hidden sm:inline">${track.durationStr}</span>
                     
                     <!-- Automatic Download Button -->
-                    <button onclick="downloadTrack(${index}, event)" title="Descargar canción" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-xs font-mont font-semibold text-zinc-300 hover:text-red-400 transition-all duration-200 flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    <button onclick="downloadTrack(${index}, event)" title="${unlocked ? 'Descargar canción' : 'Disponible el 5 de septiembre a las 10:00 PM'}" class="px-3 py-1.5 rounded-xl ${!unlocked ? 'bg-white/5 opacity-50 cursor-not-allowed' : 'bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-zinc-300 hover:text-red-400'} text-xs font-mont font-semibold transition-all duration-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 ${!unlocked ? 'text-zinc-500' : 'text-red-400'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                         <span class="hidden sm:inline">Descargar</span>
                     </button>
 
                     <!-- Lyrics Button -->
-                    <button onclick="openLyrics(${index})" class="px-3 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-xs font-mont font-semibold text-zinc-300 hover:text-red-400 transition-all duration-200 flex items-center gap-1.5">
-                        <svg class="w-4 h-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1.007 1.007 0 01.707.293l5.414 5.414a1.007 1.007 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <button onclick="openLyrics(${index})" title="${unlocked ? 'Ver letra' : 'Disponible el 5 de septiembre a las 10:00 PM'}" class="px-3 py-1.5 rounded-xl ${!unlocked ? 'bg-white/5 opacity-50 cursor-not-allowed' : 'bg-white/5 hover:bg-red-500/20 border border-white/10 hover:border-red-500/40 text-zinc-300 hover:text-red-400'} text-xs font-mont font-semibold transition-all duration-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4 ${!unlocked ? 'text-zinc-500' : 'text-red-400'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1.007 1.007 0 01.707.293l5.414 5.414a1.007 1.007 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                         <span>Letra</span>
                     </button>
                 </div>
@@ -735,9 +760,25 @@ function updateUI() {
     const vinylWrapper = document.getElementById('heroVinylWrapper');
     const vinylDisc = document.getElementById('vinylDisc');
     const stickyPlayer = document.getElementById('stickyPlayer');
+    const unlocked = isAudioUnlocked();
 
     const pauseSvg = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
     const playSvg = '<path d="M8 5v14l11-7z"/>';
+
+    if (!unlocked) {
+        if (vinylWrapper) vinylWrapper.classList.remove('is-playing');
+        if (vinylDisc) vinylDisc.classList.add('paused-animation');
+        if (stickyPlayer) stickyPlayer.classList.add('translate-y-full');
+
+        const mainText = document.getElementById('mainPlayText');
+        if (mainText) mainText.textContent = "Disponible el 5 de Septiembre, 2026 (10:00 PM) 🔒";
+
+        const mainBtn = document.getElementById('mainPlayBtn');
+        if (mainBtn) {
+            mainBtn.classList.add('opacity-80');
+        }
+        return;
+    }
 
     if (isPlaying) {
         if (vinylWrapper) vinylWrapper.classList.add('is-playing');
@@ -801,14 +842,21 @@ function closeMobileDrawer() {
 }
 
 function openLyrics(index) {
+    if (!isAudioUnlocked()) {
+        if (navigator.vibrate) navigator.vibrate([30, 50, 30]);
+        showToast("🔒 La letra estará disponible el 5 de septiembre a las 10:00 PM ❤️");
+        return;
+    }
     const track = tracksData[index];
-    document.getElementById('lyricsNumBadge').textContent = `0${track.id}`;
-    document.getElementById('lyricsTrackTitle').textContent = track.title;
-    document.getElementById('lyricsGenreBadge').textContent = track.genre;
-    document.getElementById('lyricsNoteBox').textContent = track.note;
-    document.getElementById('lyricsBody').textContent = track.lyrics;
+    const numBadge = document.getElementById('lyricsNumBadge');
+    const titleEl = document.getElementById('lyricsTrackTitle');
+    const bodyEl = document.getElementById('lyricsBody');
+    if (numBadge) numBadge.textContent = `0${track.id}`;
+    if (titleEl) titleEl.textContent = track.title;
+    if (bodyEl) bodyEl.textContent = track.lyrics;
 
     const modal = document.getElementById('lyricsModal');
+    if (!modal) return;
     modal.classList.remove('hidden');
     setTimeout(() => {
         modal.classList.remove('opacity-0');
@@ -923,6 +971,6 @@ function initCanvasEffects() {
 window.addEventListener('DOMContentLoaded', () => {
     checkAuthOnLoad();
     initCountdown();
-    renderTracklist();
+    updateUI();
     initCanvasEffects();
 });
