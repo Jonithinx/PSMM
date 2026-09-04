@@ -1,6 +1,10 @@
 /* ==========================================================================
    POR SI MUERO MAÑANA - DESIGN SYSTEM & STYLESHEET
+<<<<<<< HEAD
    Dedicated to Kale by Jonathan • Elite Mu7ic Production
+=======
+   Dedicated to Kale by Jonathan • 7lite Music Production
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
    ========================================================================== */
 
 /* --- Root Design Tokens --- */
@@ -11,14 +15,23 @@
     --bg-card-hover: rgba(35, 35, 42, 0.85);
     --accent-red: #ef4444;
     --accent-rose: #f43f5e;
+<<<<<<< HEAD
     --accent-glow: rgba(239, 68, 68, 0.4);
     --accent-glow-subtle: rgba(239, 68, 68, 0.15);
+=======
+    --accent-glow: rgba(239, 68, 68, 0.45);
+    --accent-glow-subtle: rgba(239, 68, 68, 0.18);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     --text-primary: #ffffff;
     --text-secondary: #a1a1aa;
     --text-muted: #71717a;
     --border-glass: rgba(255, 255, 255, 0.08);
     --border-glass-hover: rgba(255, 255, 255, 0.18);
+<<<<<<< HEAD
     --border-accent: rgba(239, 68, 68, 0.3);
+=======
+    --border-accent: rgba(239, 68, 68, 0.35);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 20px;
@@ -42,7 +55,11 @@ html {
     scroll-behavior: smooth;
     background-color: var(--bg-dark);
     color-scheme: dark;
+<<<<<<< HEAD
     transition: background-color 0.8s ease;
+=======
+    transition: background-color 1.2s ease-in-out;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 body {
@@ -101,6 +118,20 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     font-family: var(--font-poppins);
 }
 
+<<<<<<< HEAD
+=======
+/* --- Ethereal Atmospheric Background Glow --- */
+#ambientGlowOverlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+    background: radial-gradient(circle at 50% 25%, rgba(239, 68, 68, 0.25) 0%, rgba(244, 63, 94, 0.08) 45%, transparent 75%);
+    transition: background 1.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.6s ease-in-out;
+}
+
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 /* --- Background Ambient Canvas --- */
 #ambientCanvas {
     position: fixed;
@@ -126,10 +157,17 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     -webkit-backdrop-filter: blur(14px);
     border: 1px solid var(--border-glass);
     box-shadow: var(--shadow-card);
+<<<<<<< HEAD
     transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
                 border-color 0.3s ease,
                 background-color 0.3s ease,
                 box-shadow 0.3s ease;
+=======
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.6s ease-in-out,
+                background-color 0.6s ease-in-out,
+                box-shadow 0.6s ease-in-out;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .glass-card:hover {
@@ -140,6 +178,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .glass-card.active-track {
     border-color: var(--border-accent);
     background: linear-gradient(135deg, var(--accent-glow-subtle) 0%, rgba(20, 20, 26, 0.88) 100%);
+<<<<<<< HEAD
     box-shadow: 0 0 25px var(--accent-glow-subtle);
 }
 
@@ -155,6 +194,9 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 
 .karaoke-line.border-red-500 {
     border-color: var(--accent-red) !important;
+=======
+    box-shadow: 0 0 30px var(--accent-glow-subtle);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 /* --- Track Row Hover Effects --- */
@@ -169,7 +211,11 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .track-row.group:hover button:first-child {
     background-color: var(--accent-red) !important;
     color: #ffffff !important;
+<<<<<<< HEAD
     box-shadow: 0 0 15px var(--accent-glow);
+=======
+    box-shadow: 0 0 20px var(--accent-glow);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 /* --- Keyframe Animations --- */
@@ -179,7 +225,11 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 }
 
 .animate-spin-slow {
+<<<<<<< HEAD
     animation: spinSlow 14s linear infinite;
+=======
+    animation: spinSlow 9s linear infinite;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .paused-animation {
@@ -238,16 +288,27 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     height: 4px !important;
 }
 
+<<<<<<< HEAD
 /* --- Interactive Vinyl Cover --- */
+=======
+/* --- Perfectly Aligned & Ultra-Smooth Downward Vinyl Cover --- */
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 .vinyl-wrapper {
     position: relative;
     cursor: pointer;
     flex-shrink: 0;
+<<<<<<< HEAD
+=======
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 75px auto;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .vinyl-disc {
     position: absolute;
     top: 50%;
+<<<<<<< HEAD
     right: 0;
     transform: translateY(-50%) translateX(10px);
     width: 170px;
@@ -256,16 +317,32 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     background: radial-gradient(circle, #262626 0%, #121212 70%, #050505 100%);
     box-shadow: -5px 0 25px rgba(0, 0, 0, 0.8), inset 0 0 0 2px rgba(255, 255, 255, 0.05);
     transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+=======
+    left: 50%;
+    margin-top: -95px;
+    margin-left: -95px;
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    background: radial-gradient(circle, #2a2a2a 0%, #161618 65%, #050505 100%);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.85), inset 0 0 0 2px rgba(255, 255, 255, 0.08);
+    transition: top 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
+<<<<<<< HEAD
+=======
+    overflow: hidden;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 /* Shiny vinyl grooves texture */
 .vinyl-disc::before {
     content: '';
     position: absolute;
+<<<<<<< HEAD
     inset: 10px;
     border-radius: 50%;
     border: 1px dashed rgba(255, 255, 255, 0.08);
@@ -280,14 +357,47 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .vinyl-center-label {
     width: 70px;
     height: 70px;
+=======
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.12);
+    box-shadow: inset 0 0 0 10px rgba(0, 0, 0, 0.6), inset 0 0 0 20px rgba(255, 255, 255, 0.05), inset 0 0 0 32px rgba(0, 0, 0, 0.6);
+}
+
+/* Specular Light Sheen Reflection for 3D rotation clarity */
+.vinyl-disc::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 40%, rgba(255,255,255,0.18) 70%, transparent 100%);
+    pointer-events: none;
+}
+
+/* Ultra-smooth vertical slide STRAIGHT DOWNWARDS below the cover */
+.vinyl-wrapper:hover .vinyl-disc,
+.vinyl-wrapper.is-playing .vinyl-disc {
+    top: calc(50% + 85px);
+}
+
+.vinyl-center-label {
+    width: 72px;
+    height: 72px;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     border-radius: 50%;
     background: linear-gradient(135deg, var(--accent-red), #991b1b);
     border: 3px solid #0a0a0a;
     display: flex;
     align-items: center;
     justify-content: center;
+<<<<<<< HEAD
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     transition: background 0.6s ease;
+=======
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    transition: background 1.2s ease-in-out;
+    z-index: 2;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .vinyl-spindle-hole {
@@ -295,7 +405,11 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     height: 16px;
     border-radius: 50%;
     background: #0d0d0e;
+<<<<<<< HEAD
     border: 2px solid rgba(255, 255, 255, 0.2);
+=======
+    border: 2px solid rgba(255, 255, 255, 0.3);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .album-jacket {
@@ -309,7 +423,11 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
     padding: 0;
     overflow: hidden;
+<<<<<<< HEAD
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+=======
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .vinyl-wrapper:hover .album-jacket {
@@ -351,7 +469,11 @@ input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     margin-top: -5px;
     box-shadow: 0 0 12px var(--accent-red);
+<<<<<<< HEAD
     transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 0.6s ease;
+=======
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), background 1.2s ease;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 input[type=range]::-webkit-slider-thumb:hover,
@@ -389,7 +511,11 @@ input[type=range]::-moz-range-thumb {
     padding: 0.85rem 1.75rem;
     cursor: pointer;
     box-shadow: 0 8px 25px var(--accent-glow);
+<<<<<<< HEAD
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.6s ease;
+=======
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s ease, background 1.2s ease;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -417,7 +543,11 @@ input[type=range]::-moz-range-thumb {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+<<<<<<< HEAD
     transition: all 0.2s ease;
+=======
+    transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 }
 
 .btn-icon:hover {
@@ -436,6 +566,14 @@ input[type=range]::-moz-range-thumb {
     background: var(--accent-glow-subtle);
 }
 
+<<<<<<< HEAD
+=======
+/* --- Sticky Bottom Player Bar --- */
+.sticky-player-bar {
+    transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
 /* --- Mobile Dedicated Full Player Drawer --- */
 .mobile-player-drawer {
     position: fixed;
@@ -447,7 +585,11 @@ input[type=range]::-moz-range-thumb {
     justify-content: space-between;
     padding: 2rem 1.5rem calc(2rem + var(--safe-bottom));
     transform: translateY(100%);
+<<<<<<< HEAD
     transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1);
+=======
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     visibility: hidden;
 }
 
@@ -480,7 +622,11 @@ input[type=range]::-moz-range-thumb {
     align-items: center;
     gap: 0.6rem;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 15px var(--accent-glow);
+<<<<<<< HEAD
     transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+=======
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     opacity: 0;
     pointer-events: none;
 }
@@ -492,9 +638,16 @@ input[type=range]::-moz-range-thumb {
 
 /* --- Responsive Layout Adjustments --- */
 @media (max-width: 640px) {
+<<<<<<< HEAD
     .vinyl-wrapper:hover .vinyl-disc,
     .vinyl-wrapper.is-playing .vinyl-disc {
         transform: translateY(-50%) translateX(35px);
+=======
+    .vinyl-wrapper {
+        width: 170px;
+        height: 170px;
+        margin-bottom: 65px;
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     }
     
     .album-jacket {
@@ -503,8 +656,20 @@ input[type=range]::-moz-range-thumb {
     }
     
     .vinyl-disc {
+<<<<<<< HEAD
         width: 145px;
         height: 145px;
+=======
+        width: 160px;
+        height: 160px;
+        margin-top: -80px;
+        margin-left: -80px;
+    }
+
+    .vinyl-wrapper:hover .vinyl-disc,
+    .vinyl-wrapper.is-playing .vinyl-disc {
+        top: calc(50% + 70px);
+>>>>>>> 0d203e7 (Actualizacion: 7lite Music y adelanto de estreno al 5 de septiembre 10:00 PM)
     }
 
     .sticky-player-bar {
