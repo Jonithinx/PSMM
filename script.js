@@ -188,7 +188,7 @@ Solos tú y yo...`
         id: 5,
         title: "Ojos Cafés",
         src: "assets/album tracks/5. Ojos Cafés.wav",
-        durationStr: "03:10",
+        durationStr: "03:07",
         durationSec: 190,
         genre: "R&B Sensual / Trapsoul",
         note: "Estilo: Bajo reese profundo, atmósferas nocturnas, hi-hats rítmicos y delivery barítono melódico.",
