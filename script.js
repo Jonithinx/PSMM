@@ -189,7 +189,7 @@ Solos tú y yo...`
         title: "Ojos Cafés",
         src: "assets/album tracks/5. Ojos Cafés.wav",
         durationStr: "03:07",
-        durationSec: 190,
+        durationSec: 187,
         genre: "R&B Sensual / Trapsoul",
         note: "Estilo: Bajo reese profundo, atmósferas nocturnas, hi-hats rítmicos y delivery barítono melódico.",
         lyrics: `La noche está fría pero tú estás que quema'
