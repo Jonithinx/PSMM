@@ -8,7 +8,7 @@ const tracksData = [
     {
         id: 1,
         title: "Por Si Muero Mañana",
-        src: "assets/album tracks/1. Por Si Muero Mañana.wav",
+        src: "assets/album tracks/1. Por Si Muero Mañana.mp3",
         durationStr: "03:15",
         durationSec: 195,
         genre: "Bedroom Pop",
@@ -45,7 +45,7 @@ viviendo este segundo, por si muero mañana.`
     {
         id: 2,
         title: "Gimme That Love",
-        src: "assets/album tracks/2. Gimme That Love.wav",
+        src: "assets/album tracks/2. Gimme That Love.mp3",
         durationStr: "02:45",
         durationSec: 165,
         genre: "Afrobeat",
@@ -93,7 +93,7 @@ Tú y yo solos comiéndonos el mapa, yeh.`
     {
         id: 3,
         title: "Brutal",
-        src: "assets/album tracks/3. Brutal.wav",
+        src: "assets/album tracks/3. Brutal.mp3",
         durationStr: "03:02",
         durationSec: 182,
         genre: "Reggaeton",
@@ -141,7 +141,7 @@ hasta que amanezca te lo voy a hacer.`
     {
         id: 4,
         title: "Eterno",
-        src: "assets/album tracks/4. Eterno.wav",
+        src: "assets/album tracks/4. Eterno.mp3",
         durationStr: "03:30",
         durationSec: 210,
         genre: "Bachata",
@@ -187,7 +187,7 @@ Solos tú y yo...`
     {
         id: 5,
         title: "Ojos Cafés",
-        src: "assets/album tracks/5. Ojos Cafés.wav",
+        src: "assets/album tracks/5. Ojos Cafés.mp3",
         durationStr: "03:07",
         durationSec: 187,
         genre: "R&B Sensual / Trapsoul",
@@ -231,7 +231,7 @@ Tú eres mi nena, aquí nadie empata.`
     {
         id: 6,
         title: "Juntos Hasta El Final",
-        src: "assets/album tracks/6. Juntos Hasta el Final.wav",
+        src: "assets/album tracks/6. Juntos Hasta el Final.mp3",
         durationStr: "03:40",
         durationSec: 220,
         genre: "EDM / Tropical House / Deep House",
@@ -257,7 +257,7 @@ Cierra los ojos y déjate caer...`
     {
         id: 7,
         title: "Envejecer",
-        src: "assets/album tracks/7. Envejecer.wav",
+        src: "assets/album tracks/7. Envejecer.mp3",
         durationStr: "04:10",
         durationSec: 250,
         genre: "JyK",
@@ -378,7 +378,7 @@ function stopSynthMelody() {
     }
 }
 // --- Release Date & Audio Lock (5 de septiembre de 2026, 10:00 PM hora Honduras UTC-6) ---
-const TARGET_RELEASE_DATE = new Date("2026-09-05T22:00:00-06:00").getTime();
+const TARGET_RELEASE_DATE = new Date("2026-09-04T22:38:00-06:00").getTime();
 
 function isAudioUnlocked() {
     const now = new Date().getTime();
@@ -471,7 +471,7 @@ function downloadTrack(index, event) {
     const track = tracksData[index];
     const link = document.createElement('a');
     link.href = encodeURI(track.src);
-    link.download = `${track.id}. ${track.title}.wav`;
+    link.download = `${track.id}. ${track.title}.mp3`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
